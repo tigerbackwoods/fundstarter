@@ -32,7 +32,12 @@ var requestListener = function (req, res) {
   res.writeHead(200);
   //res.end('Hello, World!\n');
 
-  res.write(fs.readFileSync(filename, "utf8"));
+  //res.write(fs.readFileSync(filename, "utf8"));
+  fs.readFile(filename, "utf8", function(err, data) {
+		if (err) throw err;
+		response.write(data);
+		response.end();
+	});
 
 
 
