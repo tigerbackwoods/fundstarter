@@ -9,7 +9,12 @@ app.use(express.static(__dirname + '/public'))
 
 /*serves main page*/
 app.get('/', function(request, response) {
-	response.write(fs.readFileSync(filename, "utf8"))
+	fs.readFile(filename, "utf8", function(err, data) {
+		if (err) throw err;
+		response.write(data);
+		response.end();
+	});
+	//response.write(fs.readFileSync(filename, "utf8"))
 //response.sendfile('index.html') 
 })
 
