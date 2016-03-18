@@ -31,29 +31,28 @@ var filename = "./index.html";
 var requestListener = function (req, res) {
   res.writeHead(200);
 
-  //fs.stat("bitstarter.html", function(err, stats){
   fs.stat(filename, function(err, stats){
      if (err){
          return console.log(err);
      }
-     //fs.open("bitstarter.html", 'r', function (err, fd) {
+     console.log(stats.size);
+     var buf = new Buffer(stats.size);
+
      fs.open(filename, 'r', function (err, fd) {
         if(err){
            return console.log(err);
         }
-        fs.read(fd, new Buffer(stats.size), 0, stats.size, 0, function (err, bytesRead, buffer) {
+        fs.read(fd, buf, 0, stats.size, 0, function (err, bytesRead, buffer) {
            if(err){
               return console.log(err);
            }
-           res.end(buffer.toString('utf8'));
+           res.write(buffer.toString("utf8"));
+           console.log(buffer.toString("utf8"));
+           res.end();
         });
      });
        
   });
-
-
-
-
 
   //res.end('Hello, World!\n');
 
@@ -65,8 +64,6 @@ var requestListener = function (req, res) {
 		response.end();
 	});
 	*/
-
-
 
 }
 
