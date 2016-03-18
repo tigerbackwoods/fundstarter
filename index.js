@@ -1,3 +1,5 @@
+var fs = require("fs");
+var filename = "./index.html";
 var express = require('express')
 var app = express()
 
@@ -7,7 +9,8 @@ app.use(express.static(__dirname + '/public'))
 
 /*serves main page*/
 app.get('/', function(request, response) {
-response.sendfile('index.html') 
+	response.write(fs.readFileSync(filename, "utf8"))
+//response.sendfile('index.html') 
 })
 
 app.listen(app.get('port'), function() {
